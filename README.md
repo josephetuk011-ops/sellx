@@ -1,24 +1,42 @@
 # Sellx
 
-Sellx is a full-stack ecommerce platform for buyers, service providers, and dispatch riders.
+Sellx is a full-stack ecommerce marketplace for buyers, service providers, and dispatch riders.
 
-## Features
+## Included
 
-- Role-based registration and login with JWT
-- Product publishing for service providers
-- Buyer cart and order checkout
-- Paystack payment initialization and verification
-- Payment webhook support
-- Provider order management
-- Rider delivery dashboard
-- Responsive animated frontend served by Express
+- Responsive animated storefront
+- Buyer, provider, and rider role-based JWT authentication
+- Product search and provider product publishing API
+- Local cart with checkout and order dashboard
+- Paystack transaction initialization, verification, and signed webhook handling
+- Provider order status updates
+- Rider delivery status updates
+- Server-side validation, password hashing, rate limiting, and protected routes
 
 ## Run locally
 
-1. Install Node.js 18+ and MongoDB.
-2. Copy `.env.example` to `.env` and fill in the values.
-3. Run `npm install`.
-4. Run `npm run dev`.
-5. Open `http://localhost:5000`.
+Requires Node.js 18+ and MongoDB.
 
-Use Paystack test keys during development. Never expose `PAYSTACK_SECRET_KEY` in frontend code.
+```bash
+npm install
+cp .env.example .env
+npm run dev
+```
+
+Open `http://localhost:5000`.
+
+Set these values in `.env`:
+
+```env
+PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/sellx
+JWT_SECRET=use-a-long-random-secret
+PAYSTACK_SECRET_KEY=sk_test_your_key
+FRONTEND_URL=http://localhost:5000
+```
+
+Configure the Paystack webhook URL as:
+
+`https://your-domain.example/api/payments/webhook`
+
+Use Paystack test keys in development. The secret key must remain server-side. The checkout currently creates one order per first cart item; multi-item cart support should use an order-items collection before production launch.
